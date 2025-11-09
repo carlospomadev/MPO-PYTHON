@@ -1,5 +1,6 @@
 
 import random
+import os #Importar el modulo para manejar archivos
 
 #Preguntas
 preguntas_facil = [
@@ -102,8 +103,26 @@ preguntas_dificil = [
 
 ]
 ranking = []
+NOMBRE_FICHERO = "ranking.txt"
+#Funciones para guardar y cargar el ranking en un fichero
+def guardar_ranking():
+    with open(NOMBRE_FICHERO, "w") as file:
+        for jugador in ranking:
+            file.write(f"{jugador["nombre"]},{jugador["puntaje"]}\n")
 
-#funciones
+def cargar_ranking():
+    global ranking
+    if os.path.exists(NOMBRE_FICHERO):
+        with open(NOMBRE_FICHERO, "r") as file:
+            lineas = file.readlines()
+            for linea in lineas:
+                nombre, puntaje = linea.strip().split(',')
+                ranking.append({"nombre": nombre, "puntaje": int(puntaje)})
+
+# Cargar el ranking al iniciar el programa
+cargar_ranking()
+
+#Funciones
 def nuevo_juego(nombre, preguntas):
     respuestas_correctas = 0
 
