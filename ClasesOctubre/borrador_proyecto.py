@@ -4,7 +4,8 @@ from colorama import Fore, Style, init
 
 init(autoreset=True)
 
-historial = []  # Lista global para registrar comandos
+# Lista para registrar un historial de los comandos realizados
+historial = []
 
 
 def registrar_comando(comando):
@@ -13,6 +14,7 @@ def registrar_comando(comando):
 
 def mostrar_menu():
     print(" *** GESTOR DE ARCHIVOS EN CONSOLA *** \n")
+    #funcion os.getcwd() que devuelve una cadena de texto con la ruta del directorio
     print(f"Directorio actual: {os.getcwd()}")
     print("1. Listar contenido del directorio actual")
     print("2. Crear un nuevo directorio")
@@ -87,7 +89,7 @@ def escribir_en_archivo():
             nuevo_texto = input("Texto para añadir: ")
             with open(nombre, "a") as archivo:
                 archivo.write("\n" + nuevo_texto)
-            print("Texto añadido correctamente.")
+            print("El texto se añadió correctamente.")
     except Exception as e:
         print(f"Error al escribir en archivo: {e}")
 
@@ -117,6 +119,7 @@ def mostrar_informacion():
             print("No existe ese archivo o carpeta.")
         else:
             tipo = "Carpeta" if os.path.isdir(nombre) else "Archivo"
+            #Obtener el tamaño y dfecha de la última modificación
             tamaño = os.path.getsize(nombre)
             fecha = time.ctime(os.path.getmtime(nombre))
             print(f"\nInformación de '{nombre}':")
@@ -128,7 +131,7 @@ def mostrar_informacion():
 
 
 def navegar_padre():
-    registrar_comando("Navegar directorio padre")
+    registrar_comando("Navegar a directorio padre")
     os.chdir("..")
     print(f"Ahora estás en: {os.getcwd()}")
 
@@ -165,6 +168,7 @@ def mostrar_historial():
     if not historial:
         print("No se ha registrado ningún comando todavía.")
     else:
+        #Recorre la lista de comandos guardados
         for i, cmd in enumerate(historial, 1):
             print(f"{i}. {cmd}")
 
